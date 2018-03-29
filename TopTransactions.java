@@ -1,11 +1,10 @@
-
-package toptransactions;
 import java.util.*;
 import java.io.*;
+
 public class TopTransactions {
 
     public static void main(String[] args) throws Exception {
-        File input = new File("C:/Users/Zoë/Documents/17-18/Spring '18/CS 220/Sprints/TopTransactions/src/toptransactions/transactions.txt");
+        File input = new File("transactions.txt"); // just gotta make this come from cmdline
         ArrayList<String> inputList = new ArrayList<String>();
         Scanner scanner = new Scanner(input);
         
