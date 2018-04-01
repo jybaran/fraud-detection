@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class FraudDetection {
-    
+
     public static class Transaction {
         String yearmonth;
         int agencyNum;
@@ -15,7 +15,7 @@ public class FraudDetection {
         String transDate;
         String postDate;
         String MCC;
-        
+
         public Transaction( String[] tokens ) {
             yearmonth = tokens[0];
             agencyNum = Integer.parseInt(tokens[1]);
@@ -29,42 +29,7 @@ public class FraudDetection {
             postDate = tokens[9];
             MCC = tokens[10];
         }
-        
-        public float getAmount() {
-            return this.amount;
-        }
-        
-        public boolean over50k() {
-            if ( this.amount > 50000 ) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        
-        public boolean tooRound() {
-            if ( this.amount % 100 == 0 ) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        
-        public boolean isSketchy() {
-            String tempVendor = (this.vendor).toLowerCase();
-            String tempMCC = (this.MCC).toLowerCase();
-            if ( tempMCC.contains("pawn shop") ) {
-                return true;
-            }
-            if ( tempVendor.contains("resort") || tempMCC.contains("resort") ) {
-                return true;
-            }
-            if ( tempVendor.contains("casino") || tempMCC.contains("casino") ) {
-                return true;
-            }
-            return false;
-        }
-        
+
         public String toString() {
             String retStr = this.yearmonth + ", ";
             retStr += Integer.toString(this.agencyNum) + ", ";
@@ -77,7 +42,7 @@ public class FraudDetection {
             retStr += this.transDate + ", ";
             retStr += this.postDate + ", ";
             retStr += this.MCC + ", ";
-            
+
             return retStr;
         }
     }
@@ -92,7 +57,7 @@ public class FraudDetection {
             File input = new File(filename);
             ArrayList<Transaction> inputList = new ArrayList<Transaction>();
             Scanner scanner = new Scanner(input);
-            
+
             String line = scanner.nextLine(); //gets rid of headers
             while (scanner.hasNextLine() ) {
                 line = scanner.nextLine();
@@ -100,7 +65,7 @@ public class FraudDetection {
                 Transaction tempTrans = new Transaction(tokens);
                 inputList.add(tempTrans);
             }
-            
+
             for( int i = 0; i < inputList.size(); i++ ) {
                 Transaction temp = inputList.get(i);
                 if ( temp.isSketchy() || temp.over50k() || temp.tooRound() ) {
