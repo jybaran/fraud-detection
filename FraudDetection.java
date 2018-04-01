@@ -106,7 +106,8 @@ public class FraudDetection {
                 if ( temp.isSketchy() || temp.over50k() || temp.tooRound() ) {
                     System.out.println(temp);
                 }
-            } //close for
-        } // close else
+            }
+            
+        } // close else (valid input)
     } // close main
 }
