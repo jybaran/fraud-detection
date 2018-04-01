@@ -30,6 +30,41 @@ public class FraudDetection {
             MCC = tokens[10];
         }
         
+        public float getAmount() {
+            return this.amount;
+        }
+        
+        public boolean over50k() {
+            if ( this.amount > 50000 ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public boolean tooRound() {
+            if ( this.amount % 100 == 0 ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public boolean isSketchy() {
+            String tempVendor = (this.vendor).toLowerCase();
+            String tempMCC = (this.MCC).toLowerCase();
+            if ( tempMCC.contains("pawn shop") ) {
+                return true;
+            }
+            if ( tempVendor.contains("resort") || tempMCC.contains("resort") ) {
+                return true;
+            }
+            if ( tempVendor.contains("casino") || tempMCC.contains("casino") ) {
+                return true;
+            }
+            return false;
+        }
+        
         public String toString() {
             String retStr = this.yearmonth + ", ";
             retStr += Integer.toString(this.agencyNum) + ", ";
@@ -67,12 +102,10 @@ public class FraudDetection {
             }
             
             for( int i = 0; i < inputList.size(); i++ ) {
-                System.out.println(inputList.get(i));
-                /*
-                String[] temp = inputList.get(i);
-                for( int j = 0; j < temp.length; j++ ) {
-                    System.out.println( temp[j] );
-                }*/
+                Transaction temp = inputList.get(i);
+                if ( temp.isSketchy() || temp.over50k() || temp.tooRound() ) {
+                    System.out.println(temp);
+                }
             } //close for
         } // close else
     } // close main
