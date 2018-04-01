@@ -67,12 +67,10 @@ public class FraudDetection {
             }
 
             for( int i = 0; i < inputList.size(); i++ ) {
-                System.out.println(inputList.get(i));
-                /*
-                String[] temp = inputList.get(i);
-                for( int j = 0; j < temp.length; j++ ) {
-                    System.out.println( temp[j] );
-                }*/
+                Transaction temp = inputList.get(i);
+                if ( temp.isSketchy() || temp.over50k() || temp.tooRound() ) {
+                    System.out.println(temp);
+                }
             } //close for
         } // close else
     } // close main
