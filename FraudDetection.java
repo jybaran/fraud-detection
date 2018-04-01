@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class FraudDetection {
-    
+
     public static class Transaction {
         String yearmonth;
         int agencyNum;
@@ -15,7 +15,7 @@ public class FraudDetection {
         String transDate;
         String postDate;
         String MCC;
-        
+
         public Transaction( String[] tokens ) {
             yearmonth = tokens[0];
             agencyNum = Integer.parseInt(tokens[1]);
@@ -29,7 +29,7 @@ public class FraudDetection {
             postDate = tokens[9];
             MCC = tokens[10];
         }
-        
+
         public String toString() {
             String retStr = this.yearmonth + ", ";
             retStr += Integer.toString(this.agencyNum) + ", ";
@@ -42,7 +42,7 @@ public class FraudDetection {
             retStr += this.transDate + ", ";
             retStr += this.postDate + ", ";
             retStr += this.MCC + ", ";
-            
+
             return retStr;
         }
     }
@@ -57,7 +57,7 @@ public class FraudDetection {
             File input = new File(filename);
             ArrayList<Transaction> inputList = new ArrayList<Transaction>();
             Scanner scanner = new Scanner(input);
-            
+
             String line = scanner.nextLine(); //gets rid of headers
             while (scanner.hasNextLine() ) {
                 line = scanner.nextLine();
@@ -65,7 +65,7 @@ public class FraudDetection {
                 Transaction tempTrans = new Transaction(tokens);
                 inputList.add(tempTrans);
             }
-            
+
             for( int i = 0; i < inputList.size(); i++ ) {
                 System.out.println(inputList.get(i));
                 /*
