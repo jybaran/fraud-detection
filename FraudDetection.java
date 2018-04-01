@@ -10,7 +10,7 @@ public class FraudDetection {
         else {
             String filename = args[0];
             System.out.println(filename);
-            File input = new File("transactions.txt"); // just gotta make this come from cmdline
+            File input = new File(filename);
             ArrayList<String[]> inputList = new ArrayList<String[]>();
             Scanner scanner = new Scanner(input);
             
