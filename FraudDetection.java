@@ -66,6 +66,15 @@ public class FraudDetection {
         }
 
         public String toString() {
+            String retStr = this.cardInitial + ". " + this.cardName + ", ";
+            retStr += (this.transDate).substring(0, 10) + ", ";
+            retStr += this.vendor + ", ";
+            retStr += String.format("%.2f", this.amount) + ", ";
+            retStr += this.description;
+            return retStr;
+        }
+        
+        public String toString2() {
             String retStr = this.yearmonth + ", ";
             retStr += Integer.toString(this.agencyNum) + ", ";
             retStr += this.agencyName + ", ";
@@ -76,7 +85,7 @@ public class FraudDetection {
             retStr += this.vendor + ", ";
             retStr += this.transDate + ", ";
             retStr += this.postDate + ", ";
-            retStr += this.MCC + ", ";
+            retStr += this.MCC;
 
             return retStr;
         }
@@ -88,7 +97,7 @@ public class FraudDetection {
         }
         else {
             String filename = args[0];
-            System.out.println(filename);
+            //System.out.println(filename);
             File input = new File(filename);
             ArrayList<Transaction> inputList = new ArrayList<Transaction>();
             Scanner scanner = new Scanner(input);
