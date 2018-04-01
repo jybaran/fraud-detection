@@ -29,6 +29,41 @@ public class FraudDetection {
             postDate = tokens[9];
             MCC = tokens[10];
         }
+        
+        public float getAmount() {
+            return this.amount;
+        }
+        
+        public boolean over50k() {
+            if ( this.amount > 50000 ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public boolean tooRound() {
+            if ( this.amount % 100 == 0 ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public boolean isSketchy() {
+            String tempVendor = (this.vendor).toLowerCase();
+            String tempMCC = (this.MCC).toLowerCase();
+            if ( tempMCC.contains("pawn shop") ) {
+                return true;
+            }
+            if ( tempVendor.contains("resort") || tempMCC.contains("resort") ) {
+                return true;
+            }
+            if ( tempVendor.contains("casino") || tempMCC.contains("casino") ) {
+                return true;
+            }
+            return false;
+        }
 
         public String toString() {
             String retStr = this.yearmonth + ", ";
