@@ -53,7 +53,7 @@ public class FraudDetector {
         public boolean isSketchy() {
             String tempVendor = (this.vendor).toLowerCase();
             String tempMCC = (this.MCC).toLowerCase();
-            if ( tempMCC.contains("pawn shop") ) {
+            if ( tempVendor.contains("pawn shop") ||tempMCC.contains("pawn shop") ) {
                 return true;
             }
             if ( tempVendor.contains("resort") || tempMCC.contains("resort") ) {
