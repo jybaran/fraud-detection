@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class FraudDetection {
+public class FraudDetector {
 
     public static class Transaction {
         String yearmonth;
