@@ -64,6 +64,26 @@ public class FraudDetector {
             }
             return false;
         }
+        
+        public boolean isAirline() {
+            String tempDesc = (this.description).toLowerCase();
+            if ( tempDesc.contains("air travel") ) {
+                return true;
+            }
+            return false;
+        }
+        
+        public String getMCC() {
+            return this.MCC;
+        }
+        
+        public boolean isBadAirline( List<String> badAirlines ) {
+            String tempMCC = this.MCC;
+            if ( badAirlines.contains( tempMCC ) ) {
+                return true;
+            }
+            return false;
+        }
 
         public String toString() {
             String retStr = this.cardInitial + ". " + this.cardName + ", ";
@@ -96,6 +116,8 @@ public class FraudDetector {
             System.out.println("Incorrect input. To run: java FraudDetection [filename]");
         }
         else {
+            Map<String, Integer> airlineDict = new HashMap<String, Integer>();
+            
             String filename = args[0];
             //System.out.println(filename);
             File input = new File(filename);
@@ -110,12 +132,42 @@ public class FraudDetector {
                 inputList.add(tempTrans);
             }
 
+            // generates airline dictionary
             for( int i = 0; i < inputList.size(); i++ ) {
                 Transaction temp = inputList.get(i);
-                if ( temp.isSketchy() || temp.over50k() || temp.tooRound() ) {
-                    System.out.println(temp);
+                if ( temp.isAirline() ) {
+                    String airlineName = temp.getMCC();
+                    if ( airlineDict.containsKey( airlineName ) ) {
+                        Integer newInt = new Integer( airlineDict.get( airlineName ) + 1 );
+                        airlineDict.put( airlineName, newInt );
+                    }
+                    else {
+                        airlineDict.put( temp.getMCC(), 1 );
+                    }
                 }
             }
+            
+            // generates list of airlines with less than 10 occurances in dataset
+            ArrayList<String> badAirlines = new ArrayList<String>();
+            Set<String> airlineSet = airlineDict.keySet();
+            for( String s : airlineSet ) {
+                if ( airlineDict.get( s ) < 10 ) {
+                    badAirlines.add( s );
+                }
+            }
+            
+            // testing bad airline list
+            for( String s : badAirlines ) {
+                System.out.println( s );
+            }
+            
+            /*
+            for( int i = 0; i < inputList.size(); i++ ) {
+                Transaction temp = inputList.get(i);
+                if ( temp.isSketchy() || temp.over50k() || temp.tooRound() || temp.isBadAirline( badAirlines ) ) {
+                    System.out.println(temp);
+                }
+            }*/
             
         } // close else (valid input)
     } // close main
