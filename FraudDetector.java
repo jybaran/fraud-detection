@@ -138,6 +138,7 @@ public class FraudDetector {
                 if ( temp.isAirline() ) {
                     String airlineName = temp.getMCC();
                     if ( airlineDict.containsKey( airlineName ) ) {
+                        //System.out.println(temp);
                         Integer newInt = new Integer( airlineDict.get( airlineName ) + 1 );
                         airlineDict.put( airlineName, newInt );
                     }
@@ -146,6 +147,8 @@ public class FraudDetector {
                     }
                 }
             }
+            airlineDict.remove(" ");
+            airlineDict.remove("BOOK STORES");
             
             // generates list of airlines with less than 10 occurances in dataset
             ArrayList<String> badAirlines = new ArrayList<String>();
@@ -157,17 +160,19 @@ public class FraudDetector {
             }
             
             // testing bad airline list
-            for( String s : badAirlines ) {
+            /******
+             for( String s : badAirlines ) {
                 System.out.println( s );
-            }
+             }
+             ******/
             
-            /*
+            
             for( int i = 0; i < inputList.size(); i++ ) {
                 Transaction temp = inputList.get(i);
                 if ( temp.isSketchy() || temp.over50k() || temp.tooRound() || temp.isBadAirline( badAirlines ) ) {
                     System.out.println(temp);
                 }
-            }*/
+            }
             
         } // close else (valid input)
     } // close main
