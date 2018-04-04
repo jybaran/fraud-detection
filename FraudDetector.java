@@ -85,6 +85,7 @@ public class FraudDetector {
             return false;
         }
 
+        // prints subset of data that seemed relevant
         public String toString() {
             String retStr = this.cardInitial + ". " + this.cardName + ", ";
             retStr += (this.transDate).substring(0, 10) + ", ";
@@ -94,6 +95,7 @@ public class FraudDetector {
             return retStr;
         }
         
+        // prints all data
         public String toString2() {
             String retStr = this.yearmonth + ", ";
             retStr += Integer.toString(this.agencyNum) + ", ";
@@ -119,7 +121,6 @@ public class FraudDetector {
             Map<String, Integer> airlineDict = new HashMap<String, Integer>();
             
             String filename = args[0];
-            //System.out.println(filename);
             File input = new File(filename);
             ArrayList<Transaction> inputList = new ArrayList<Transaction>();
             Scanner scanner = new Scanner(input);
@@ -159,18 +160,17 @@ public class FraudDetector {
                 }
             }
             
-            // testing bad airline list
-            /******
-             for( String s : badAirlines ) {
-                System.out.println( s );
-             }
-             ******/
-            
-            
+            // prints flagged transactions w/ explanation
             for( int i = 0; i < inputList.size(); i++ ) {
                 Transaction temp = inputList.get(i);
-                if ( temp.isSketchy() || temp.over50k() || temp.tooRound() || temp.isBadAirline( badAirlines ) ) {
-                    System.out.println(temp);
+                if ( temp.over50k() ) {
+                    System.out.println( temp + " - Flagged due to transaction exceeding $50,000" );
+                } else if ( temp.isSketchy() ) {
+                    System.out.println( temp + " - Flagged due to resort/casino/pawnshop" );
+                } else if ( temp.tooRound() ) {
+                    System.out.println( temp + " - Flagged due to unusually \"round\" transaction" );
+                } else if ( temp.isBadAirline( badAirlines ) ) {
+                    System.out.println( temp  + " - Flagged due to infrequently used airline" );
                 }
             }
             
